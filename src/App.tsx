@@ -1,8 +1,13 @@
-import React from 'react';
-import Card from "./Components/Cards";
+import  Card  from "./Components/Cards";
 
 function App() {
-  return <Card />;
+  return (
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <Card />
+      <Card />
+      <Card />
+    </div>
+  );
 }
 
 export default App;
