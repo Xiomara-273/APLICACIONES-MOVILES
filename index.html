@@ -1,13 +1,129 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>vite-proyect</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos Curiosos del Espacio</title>
+    <!-- Carga del CDN de Tailwind CSS para utilidades de diseño -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilo personalizado para la fuente Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-8">
+
+    <!-- Contenedor Principal -->
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Encabezado y Título -->
+        <header class="text-center mb-10 p-6 bg-white rounded-xl shadow-lg">
+            <h1 class="text-4xl font-extrabold text-indigo-800 tracking-tight mb-2">
+                Explorando el Universo 🌌
+            </h1>
+            <p class="text-lg text-gray-600">
+                Una colección de datos sorprendentes sobre el espacio exterior.
+            </p>
+        </header>
+
+        <!-- Contenedor para las Tarjetas (Cards) -->
+        <div id="cards-container" 
+             class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <!-- Las tarjetas se insertarán aquí dinámicamente con JavaScript -->
+        </div>
+
+        <!-- Pie de página simple -->
+        <footer class="text-center mt-12 pt-6 border-t border-gray-200 text-gray-500 text-sm">
+            <p>© 2025 App Informativa Básica. Desarrollado con HTML, JS y Tailwind CSS.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Array de datos: La información que usaremos para generar las tarjetas
+        const funFacts = [
+            {
+                title: "El Sol es una estrella amarilla enana",
+                description: "Aunque nos parezca inmenso, el Sol es clasificado como una estrella de tamaño medio. Dentro de 5 mil millones de años, se convertirá en una gigante roja.",
+                image: "https://placehold.co/400x200/5e35b1/ffffff?text=El+Sol",
+                color: "bg-yellow-100 border-yellow-300"
+            },
+            {
+                title: "Marte tiene el volcán más grande",
+                description: "Olympus Mons en Marte es el volcán más grande conocido en el sistema solar. Mide más de 25 km de altura, ¡casi tres veces la altura del Monte Everest!",
+                image: "https://placehold.co/400x200/c62828/ffffff?text=Olympus+Mons",
+                color: "bg-red-100 border-red-300"
+            },
+            {
+                title: "Un día en Venus es más largo que un año",
+                description: "Venus tiene la rotación más lenta de cualquier planeta. Tarda 243 días terrestres en girar sobre su eje, mientras que su órbita alrededor del Sol solo dura 225 días.",
+                image: "https://placehold.co/400x200/1565c0/ffffff?text=Venus",
+                color: "bg-blue-100 border-blue-300"
+            },
+            {
+                title: "Júpiter es un gigante gaseoso",
+                description: "Júpiter es tan masivo que todos los demás planetas del sistema solar podrían caber dentro de él. Su famosa Gran Mancha Roja es una tormenta más grande que la Tierra.",
+                image: "https://placehold.co/400x200/4e342e/ffffff?text=Júpiter",
+                color: "bg-gray-200 border-gray-400"
+            },
+            {
+                title: "La Vía Láctea tiene mil millones de estrellas",
+                description: "Se estima que nuestra galaxia contiene entre 100 y 400 mil millones de estrellas, y un número aún mayor de planetas.",
+                image: "https://placehold.co/400x200/004d40/ffffff?text=Vía+Láctea",
+                color: "bg-teal-100 border-teal-300"
+            },
+            {
+                title: "Saturno tiene anillos espectaculares",
+                description: "Los anillos de Saturno están compuestos principalmente de miles de millones de trozos de hielo y roca. Son increíblemente delgados, con solo unos pocos kilómetros de grosor.",
+                image: "https://placehold.co/400x200/388e3c/ffffff?text=Saturno",
+                color: "bg-green-100 border-green-300"
+            }
+        ];
+
+        // Función para generar una tarjeta (card) a partir de un objeto de datos
+        function createCard(fact) {
+            return `
+                <div class="bg-white ${fact.color} border-l-4 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 overflow-hidden">
+                    <!-- Imagen de la tarjeta -->
+                    <img src="${fact.image}" 
+                         alt="Imagen de ${fact.title}" 
+                         class="w-full h-48 object-cover"
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x200/6b21a8/ffffff?text=No+Image'">
+                    
+                    <!-- Contenido de la tarjeta -->
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-gray-900 mb-3">${fact.title}</h2>
+                        <p class="text-gray-700 text-base">${fact.description}</p>
+                    </div>
+
+                    <!-- Botón de acción -->
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg font-semibold 
+                                       hover:bg-indigo-700 transition duration-150 transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50">
+                            Leer más
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Función principal para renderizar todas las tarjetas
+        function renderCards() {
+            const container = document.getElementById('cards-container');
+            if (container) {
+                // Generamos un string HTML concatenando todas las tarjetas
+                const cardsHTML = funFacts.map(createCard).join('');
+                
+                // Insertamos el HTML generado dentro del contenedor
+                container.innerHTML = cardsHTML;
+            }
+        }
+
+        // Ejecutamos la función de renderizado cuando la página esté completamente cargada
+        window.onload = renderCards;
+
+    </script>
+</body>
 </html>
